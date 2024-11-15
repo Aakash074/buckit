@@ -8,6 +8,7 @@ const contractId = "0.0.5089373"
 const topicId = "0.0.4887959"
 //@ts-ignore
 const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
+  const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showBucket, setShowBucket] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -15,6 +16,19 @@ const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
   console.log(buckets)
 
   const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=${isVisible ? 1 : 0}&controls=0&modestbranding=1&loop=1&playlist=${videoId}&mute=0`;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial state
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   async function addToBucketList() {
     console.log(nftAddress, typeof nftAddress);
@@ -140,7 +154,7 @@ const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
         width: '100%',
         height: '100%',
         pointerEvents: 'none', // Disable interactions if needed
-        maxWidth: '500px'
+        maxWidth: '420px'
       }}
     >
       <iframe
@@ -155,7 +169,7 @@ const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
       >
       </iframe>
       </div>
-      <div className='absolute bottom-16 left-4'>
+      <div className={`absolute ${isMobile ? 'left-4 bottom-16' : 'left-[450px] bottom-8'}`}>
         <button onClick={() => setShowBucket(!showBucket)}>BuckIt</button>
       </div>
     {showBucket && <div className='absolute bottom-28 left-4 right-4 z-100 bg-white p-4 rounded-md'>

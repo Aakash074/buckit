@@ -24,10 +24,10 @@ useEffect(() => {
 
   return (
     <div className='w-full'>
-        <div style={{ overflowY: 'auto', height: '100vh' }}>
+        <div className='w-full' style={{ overflowY: 'auto', height: '100vh' }}>
         {content?.map((item, index) => {
             console.log(item)
-            return <div key={index} className='w-[100vw] md:w-[1000px]' style={{ height: '100vh', overflow: 'hidden' }}>
+            return <div key={index} className='w-full' style={{ height: '100vh', overflow: 'hidden' }}>
                 <YouTubeEmbed //@ts-ignore
                     videoId={item?.metadata?.properties?.videoId} //@ts-ignore
                     buckets={item?.metadata?.properties?.buckets}//@ts-ignore

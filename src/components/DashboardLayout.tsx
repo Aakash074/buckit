@@ -82,7 +82,7 @@ const ResponsiveLayout = ({ children }) => {
   if(isMobile) {
     return (
         <div style={{position: 'relative', display: 'flex', flexDirection: 'row', height: '100vh', width: '100vw'}}>
-        <div>
+        <div className='w-full'>
           {children}
         </div>
         <div className="fixed bottom-0 w-full" style={{padding: '0.4rem', backgroundColor: '#bad3ff'}}>
@@ -97,7 +97,7 @@ const ResponsiveLayout = ({ children }) => {
     <div style={{display: 'flex', flexDirection: 'row', height: '100vh', width: '100vw'}}>
     <div style={{display: 'none'}}><DynamicWidget/> </div>
     <div style={{width: '15%', height: '100%', backgroundColor: '#bad3ff'}}><SideBar /></div>
-    <div>
+    <div className='overflow-scroll no-scrollbar grow'>
       {children}
     </div>
     </div>

@@ -56,6 +56,27 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+	require("tailwindcss-animate"),
+	function ({ addUtilities }) {
+		addUtilities({
+		  ".no-scrollbar": {
+			/* Hide scrollbar for Webkit browsers (Safari, Chrome) */
+			"&::-webkit-scrollbar": {
+			  display: "none",
+			},
+			/* Hide scrollbar for IE, Edge, and Firefox */
+			"-ms-overflow-style": "none",
+			"scrollbar-width": "none",
+			".font-normal-important": {
+			  fontWeight: "normal !important",
+			},
+			".font-normal-important": {
+			  fontWeight: "normal !important",
+			},
+		  },
+		});
+	  },
+  ],
 }
 
