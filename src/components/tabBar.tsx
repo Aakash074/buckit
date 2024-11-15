@@ -2,6 +2,7 @@
 // import { useState, useEffect } from 'react';
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core'
 import { useNavigate } from 'react-router-dom';
+import { BellAlertIcon, HomeIcon, PlusCircleIcon, QueueListIcon, UserIcon } from '@heroicons/react/24/solid';
 
 //@ts-ignore
 export const TabBar = () => {
@@ -10,11 +11,12 @@ export const TabBar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='flex flex-row justify-evenly gap-1'>
-        <button onClick={() => navigate("/dashboard")}>Home</button>
-        <button onClick={() => navigate("/bucket")}>Bucket</button>
-        <button onClick={() => navigate("/upload")}>Upload</button>
-        <button onClick={() => setShowDynamicUserProfile(!showDynamicUserProfile)}>Profile</button>
+    <div className='flex flex-row justify-evenly items-center gap-1 py-2'>
+        <div onClick={() => navigate("/dashboard")}><HomeIcon className="size-6 text-blue-500" /></div>
+        <div onClick={() => navigate("/bucket")}><QueueListIcon className="size-6 text-blue-500" /></div>
+        <div onClick={() => navigate("/upload")}><PlusCircleIcon className="size-8 text-blue-500" /></div>
+        <div onClick={() => navigate("/upload")}><BellAlertIcon className="size-6 text-blue-500" /></div>
+        <div onClick={() => setShowDynamicUserProfile(!showDynamicUserProfile)}><UserIcon className="size-6 text-blue-500" /></div>
     </div>
   );
 };

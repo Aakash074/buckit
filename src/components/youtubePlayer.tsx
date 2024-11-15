@@ -169,10 +169,10 @@ const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
       >
       </iframe>
       </div>
-      <div className={`absolute ${isMobile ? 'left-4 bottom-16' : 'left-[450px] bottom-8'}`}>
+      <div className={`absolute ${isMobile ? ' flex flex-row w-full ml-4 bottom-16' : 'bottom-8 flex flex-row w-[95%] max-w-[380px]'}`}>
         <button onClick={() => setShowBucket(!showBucket)}>BuckIt</button>
       </div>
-    {showBucket && <div className='absolute bottom-28 left-4 right-4 z-100 bg-white p-4 rounded-md'>
+    {showBucket && <div className={`absolute ${isMobile ? 'm-4 w-[95%] bottom-24' : 'bottom-16 m-4 w-[95%] max-w-[380px]' } z-100 bg-white p-4 rounded-md`}>
       {/* <div>
         <label>
           <input
@@ -189,13 +189,16 @@ const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
 
         return (
           <div key={index} className='flex flex-col text-left'>
-            <label>
+            <label className='flex flex-row'>
               <input
                 type="checkbox"
                 checked={isSelected}
                 onChange={() => handleItemChange(item)}
+                className='mr-2'
               />
+              <div>
               {index + 1}. {item.name}
+              </div>
             </label>
             <div>{item.mapData?.placePrediction?.text?.text}</div>
           </div>

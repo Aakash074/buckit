@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useState } from 'react'; //@ts-ignore
+import { useEffect, useState } from 'react'; //@ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios from 'axios';
 import { mintNFT } from '@/lib/createNFT';
@@ -60,6 +60,7 @@ function extractYoutubeVideoId(url) {
 export const Upload = () => {
       const [value, setValue] = useState("");
       const [extractedData, setExtractedData] = useState();
+      const [isMobile, setIsMobile] = useState(false);
       
     
       //@ts-ignore
@@ -425,24 +426,41 @@ export const Upload = () => {
                 .catch(err => console.error("Error minting NFT:", err));
         }
 
+    
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial state
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
       return (
-        <div>
-            <input placeholder="Enter Location Name" value={value} onChange={handleChange} />
+        <div className='w-full relative'>
+            <div className={`flex flex-row justify-between items-center p-2 fixed top-0 ${isMobile ? 'w-full' : 'w-[85%]'} bg-white`}>
+            <input placeholder="Enter Youtube Shorts Link" className='grow p-2' value={value} onChange={handleChange} />
             <button onClick={handleFetch}>Fetch</button>
-            {extractedData && <div> 
+            </div>
+            {extractedData && <div className='mt-20 flex flex-col justify-center items-center'> 
                 {/* @ts-ignore */}
-                <img src={extractedData?.videoDetails?.thumbnails?.high?.url} alt={extractedData?.videoDetails?.title} />
-                <div className='flex flex-col text-left'>
+                <img src={extractedData?.videoDetails?.thumbnails?.high?.url} alt={extractedData?.videoDetails?.title} className={isMobile ? 'w-full' : 'max-w-[450px]'} />
+                <div className='flex flex-col text-left p-4'>
                     {/* @ts-ignore */}
                     {extractedData?.result?.length && extractedData?.result?.map((item, index) => {
                         return <div className='flex flex-col p-2' key={index}>
-                            <div>{index +1}. {item?.name}</div>
+                            <div className='font-bold text-lg'>{index +1}. {item?.name}</div>
                             <div>{item?.mapData?.placePrediction?.text?.text}</div>
                         </div>
                     })}
                 </div>
                 <button onClick={() => handleUpload()}>Upload & Mint NFT</button>
                 </div>}
+                <div className='p-8' />
         </div>
       );
     };

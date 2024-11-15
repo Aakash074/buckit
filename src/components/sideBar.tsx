@@ -2,6 +2,7 @@
 // import { useState, useEffect } from 'react';
 import { useDynamicContext } from '@dynamic-labs/sdk-react-core'
 import { useNavigate } from 'react-router-dom';
+import { BellAlertIcon, HomeIcon, PlusCircleIcon, QueueListIcon, UserIcon } from '@heroicons/react/24/solid';
 
 //@ts-ignore
 export const SideBar = () => {
@@ -10,11 +11,12 @@ export const SideBar = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column', padding: '20px'}}>
-        <button style={{marginBottom: '20px'}} onClick={() => navigate("/dashboard")}>Home</button>
-        <button style={{marginBottom: '20px'}} onClick={() => navigate("/bucket")}>Bucket</button>
-        <button style={{marginBottom: '20px'}} onClick={() => navigate("/upload")}>Upload</button>
-        <button onClick={() => setShowDynamicUserProfile(!showDynamicUserProfile)}>Profile</button>
+    <div className='divide-y-[1px] divide-blue-500 justify-center' style={{display: 'flex', flexDirection: 'column',}}>
+        <div onClick={() => navigate("/dashboard")} className='flex flex-row items-center gap-2 p-4 cursor-pointer'><HomeIcon className="size-6 text-blue-500" /><div>Home</div></div>
+        <div onClick={() => navigate("/bucket")} className='flex flex-row items-center gap-2 p-4 cursor-pointer'><QueueListIcon className="size-6 text-blue-500" /><div>Bucket</div></div>
+        <div onClick={() => navigate("/upload")} className='flex flex-row items-center gap-2 p-4 cursor-pointer'><PlusCircleIcon className="size-6 text-blue-500" /><div>Upload</div></div>
+        <div onClick={() => navigate("/upload")} className='flex flex-row items-center gap-2 p-4 cursor-pointer'><BellAlertIcon className="size-6 text-blue-500" /><div>Alerts</div></div>
+        <div onClick={() => setShowDynamicUserProfile(!showDynamicUserProfile)} className='flex flex-row items-center gap-2 p-4 cursor-pointer'><UserIcon className="size-6 text-blue-500" /><div>Profile</div></div>
     </div>
   );
 };
