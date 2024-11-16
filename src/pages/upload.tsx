@@ -71,7 +71,7 @@ export const Upload = () => {
         const handleFetch = async () => {
             if(value) {
                 const videoId = extractYoutubeVideoId(value);
-                let result = await axios.get("http://app.clonemytrips.com/reels/" + videoId)
+                let result = await axios.get("https://app.clonemytrips.com/reels/" + videoId)
                 result = result.data
                 // const result = {
                 //     "result": [
