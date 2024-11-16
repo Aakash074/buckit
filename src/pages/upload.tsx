@@ -71,7 +71,7 @@ export const Upload = () => {
         const handleFetch = async () => {
             if(value) {
                 const videoId = extractYoutubeVideoId(value);
-                let result = await axios.get("http://localhost:3001/reels/" + videoId)
+                let result = await axios.get("http://app.clonemytrips.com/reels/" + videoId)
                 result = result.data
                 // const result = {
                 //     "result": [
@@ -407,7 +407,7 @@ export const Upload = () => {
         const handleUpload = async () => {
             // const response = await axios.post(extractedData?.videoDetails?.thumbnails?.high?.url, { responseType: 'arraybuffer' });
             // const imageBuffer = Buffer.from(response.data, 'binary');
-            const response = await axios.post('http://localhost:3001/proxy', { //@ts-ignore
+            const response = await axios.post('https://app.clonemytrips.com/proxy', { //@ts-ignore
                 url: extractedData?.videoDetails?.thumbnails?.high?.url
             })
             console.log(response)
