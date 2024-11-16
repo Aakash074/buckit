@@ -96,35 +96,31 @@ export const User = () => {
                     .addString(user?.toString())
                     .addString(userAccount?.accountId?.toString());
 
-                    const transaction = new ContractExecuteTransaction()
-                    .setContractId(contractId)
-                    .setGas(100_000) // Set gas limit appropriately
-                    .setFunction(
-                      "followUser",
-                      params
-                    ); // Use addString instead of addUint256
+        const transaction = new ContractExecuteTransaction()
+        .setContractId(contractId)
+        .setGas(100_000) // Set gas limit appropriately
+        .setFunction(
+          "followUser",
+          params
+        ); // Use addString instead of addUint256
             
-                console.log(transaction)
+        console.log(transaction)
             
-                const txResponse = await transaction.execute(client);
-                const receipt = await txResponse.getReceipt(client);
-                console.log(`Transaction status: ${receipt.status}`);
-                const sendResponse = await new TopicMessageSubmitTransaction({
-                  topicId: topicId,
-                  message: `${user} is added to following list`,
-                }).execute(client);
-                const getReceipt = await sendResponse.getReceipt(client);
+        const txResponse = await transaction.execute(client);
+        const receipt = await txResponse.getReceipt(client);
+        console.log(`Transaction status: ${receipt.status}`);
+        const sendResponse = await new TopicMessageSubmitTransaction({
+          topicId: topicId,
+          message: `${user} is ${following ? 'removed from the' : 'added to'} following list`,
+        }).execute(client);
+        const getReceipt = await sendResponse.getReceipt(client);
             
-                // Get the status of the transaction
-                const transactionStatus = getReceipt.status
-                console.log("The message transaction status " + transactionStatus.toString())
-
-                // Create a signer instance
-    // const signer = {
-    //     getPublicKey: () => PrivateKey.fromStringDer(userAccount?.accountPvtKey)?.publicKey,
-    //     sign: async (message) => PrivateKey.fromStringDer(userAccount?.accountPvtKey)?.sign(message),
-    // };
-      }
+        // Get the status of the transaction
+        const transactionStatus = getReceipt.status
+        console.log("The message transaction status " + transactionStatus.toString())
+        setFollowing(!following);
+        //@ts-ignore
+    }
 
     return (<div className='w-full'>
         <div className='flex flex-row justify-between p-4'>

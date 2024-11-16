@@ -2,7 +2,7 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import DashboardLayout from "./components/DashboardLayout";
-import { Home, Dashboard, Bucket, Upload, User } from "./pages";
+import { Home, Dashboard, Bucket, Upload, User, Alerts } from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/alerts',
-    element: <DashboardLayout><Upload /></DashboardLayout>,
+    element: <DashboardLayout><Alerts /></DashboardLayout>,
   },
   {
     path: '/:user',
