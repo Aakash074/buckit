@@ -1,4 +1,11 @@
-# React + TypeScript + Vite
+# Buckit
+
+Fungible Token (BCK) - 0.0.5138352
+
+Topic ID - 0.0.5138179
+
+Smart Contract Id - 0.0.5138175
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

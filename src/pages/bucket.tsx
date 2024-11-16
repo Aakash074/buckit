@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // import { useState, useEffect } from 'react';
-import { Client, ContractCallQuery, ContractFunctionParameters, PrivateKey, AccountId } from "@hashgraph/sdk";
+import { Client, ContractCallQuery, ContractFunctionParameters, PrivateKey, AccountId, TokenAssociateTransaction, TransferTransaction } from "@hashgraph/sdk";
 import { useEffect, useState } from "react";
 import { Interface } from "ethers"; // Direct import in v6
 import BucketAbi from "../contracts/BucketAbi.json";
@@ -10,8 +10,15 @@ import { MagicCard } from '@/components/ui/magic-card';
 //   return toBigInt(value);
 // };
 
+const tokenId = "0.0.5138352" 
 
 const contractId = "0.0.5138175"
+//@ts-ignore
+// const userAccount = JSON.parse(localStorage.getItem('hederaAccountData'));
+// Initialize Hedera client
+const client = Client.forTestnet(); // Use Client.forMainnet() for mainnet
+//@ts-ignore
+client.setOperator(import.meta.env.VITE_HEDERA_TESTNET_ACCOUNT_ID, PrivateKey.fromStringDer(import.meta.env.VITE_HEDERA_TESTNET_PRIVATE_KEY));
 //@ts-ignore
 function transformToCountryGroupedArray(data) {
     const countryMap = {};
@@ -86,6 +93,44 @@ useEffect(() => {
     getBucketList();
 },[])
 
+const handleClick = async () => { //@ts-ignore
+    const amount = parseInt(Math.random()*1000);
+    const client = Client.forTestnet(); // Use Client.forMainnet() for mainnet
+//@ts-ignore
+client.setOperator(import.meta.env.VITE_HEDERA_TESTNET_ACCOUNT_ID, PrivateKey.fromStringDer(import.meta.env.VITE_HEDERA_TESTNET_PRIVATE_KEY));
+
+    const associateAliceTx = await new TokenAssociateTransaction()
+	.setAccountId(userAccount?.accountId)
+	.setTokenIds([tokenId])
+	.freezeWith(client)
+	.sign(PrivateKey.fromStringDer(userAccount?.accountPvtKey));
+
+//SUBMIT THE TRANSACTION
+const associateAliceTxSubmit = await associateAliceTx.execute(client);
+
+//GET THE RECEIPT OF THE TRANSACTION
+const associateAliceRx = await associateAliceTxSubmit.getReceipt(client);
+
+//LOG THE TRANSACTION STATUS
+console.log(`- Token association with Alice's account: ${associateAliceRx.status} \n`);
+
+const tokenTransferTx = await new TransferTransaction() //@ts-ignore
+	.addTokenTransfer(tokenId, import.meta.env.VITE_HEDERA_TESTNET_ACCOUNT_ID, -parseInt(amount / 2)) //@ts-ignore
+	.addTokenTransfer(tokenId, userAccount?.accountId, parseInt(amount / 2))
+	.freezeWith(client)
+	.sign(PrivateKey.fromStringDer(import.meta.env.VITE_HEDERA_TESTNET_PRIVATE_KEY));
+
+//SUBMIT THE TRANSACTION
+const tokenTransferSubmit = await tokenTransferTx.execute(client);
+
+//GET THE RECEIPT OF THE TRANSACTION
+const tokenTransferRx = await tokenTransferSubmit.getReceipt(client);
+
+//LOG THE TRANSACTION STATUS
+console.log(`\n- Stablecoin transfer from Treasury to Alice: ${tokenTransferRx.status} \n`);
+
+}
+
     return (
     <div className="w-full h-full flex flex-col text-left p-4">
         <div className="text-xl font-bold">Buckets</div>
@@ -104,7 +149,7 @@ useEffect(() => {
             </div>)}
             {/* @ts-ignore */}
             <div>{parseInt(Math.random()*1000)} USD</div>
-            <div className="w-full text-right cursor-pointer">Book Now</div>
+            <div className="w-full text-right cursor-pointer" onClick={handleClick}>Book Now</div>
             </MagicCard>
         </div>)}
     </div>
