@@ -9,7 +9,7 @@ import BucketAbi from "../contracts/BucketAbi.json";
 // };
 
 
-const contractId = "0.0.5136500"
+const contractId = "0.0.5138175"
 //@ts-ignore
 function transformToCountryGroupedArray(data) {
     const countryMap = {};

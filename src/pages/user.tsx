@@ -6,14 +6,15 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import BucketAbi from "../contracts/BucketAbi.json";
 
-const contractId = "0.0.5136500";
-const topicId = "0.0.4887959";
+const contractId = "0.0.5138175";
+const topicId = "0.0.5138179";
 
 //@ts-ignore
 export const User = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [following, setFollowing] = useState(false)
     const { user } = useParams();
+    console.log(isMobile)
 
     useEffect(() => {
         const handleResize = () => {

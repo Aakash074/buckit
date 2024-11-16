@@ -14,7 +14,7 @@ import {
   } from "@hashgraph/sdk";
 import axios from 'axios';
 
-const topicId = "0.0.4887959"
+const topicId = "0.0.5138179"
 
 // Initialize Hedera client
 const client = Client.forTestnet(); // Use Client.forMainnet() for mainnet

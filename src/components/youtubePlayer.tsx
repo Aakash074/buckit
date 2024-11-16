@@ -6,8 +6,8 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';
 
 
-const contractId = "0.0.5136500"
-const topicId = "0.0.4887959"
+const contractId = "0.0.5138175"
+const topicId = "0.0.5138179"
 //@ts-ignore
 const YouTubeEmbed = ({ videoId, buckets, nftAddress, creator, description }) => {
   const [isMobile, setIsMobile] = useState(false);
