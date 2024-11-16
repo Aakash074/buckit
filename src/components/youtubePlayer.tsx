@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Client, ContractExecuteTransaction, ContractFunctionParameters, PrivateKey, TopicMessageSubmitTransaction } from "@hashgraph/sdk";
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { useNavigate } from 'react-router-dom';

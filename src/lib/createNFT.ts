@@ -25,7 +25,7 @@ const createNonFungibleToken = async (
     treasuryAccountId: string | AccountId,
     supplyKey: PrivateKey,
     treasuryAccountPrivateKey: PrivateKey,
-    initialSupply: number,
+    _initialSupply: number,
     tokenName: string,
     tokenSymbol: string
   ): Promise<{ tokenId: TokenId; supplyKey: PrivateKey }> => {
