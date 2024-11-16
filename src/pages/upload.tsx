@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'; //@ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios from 'axios';
 import { mintNFT } from '@/lib/createNFT';
+import { Client, FileCreateTransaction, Hbar, PrivateKey } from '@hashgraph/sdk';
 
 //@ts-ignore
 const JWT = import.meta.env.VITE_PINATA_JWT;
@@ -12,6 +13,11 @@ const JWT = import.meta.env.VITE_PINATA_JWT;
 const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY;
 //@ts-ignore
 const PINATA_SECRET_KEY = import.meta.env.VITE_PINATA_SECRET_KEY;
+
+const client = Client.forTestnet(); // Use Client.forMainnet() for mainnet
+//@ts-ignore
+client.setOperator(import.meta.env.VITE_HEDERA_TESTNET_ACCOUNT_ID, PrivateKey.fromStringDer(import.meta.env.VITE_HEDERA_TESTNET_PRIVATE_KEY));
+
 
 const uploadToPinata = async (file: File) => {
   const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
@@ -61,6 +67,8 @@ export const Upload = () => {
       const [value, setValue] = useState("");
       const [extractedData, setExtractedData] = useState();
       const [isMobile, setIsMobile] = useState(false);
+      const [file, setFile] = useState(null);
+
       
     
       //@ts-ignore
@@ -68,10 +76,42 @@ export const Upload = () => {
             setValue(e.target.value);
         };
 
+        //@ts-ignore
+        const handleFileChange = (event) => {
+          setFile(event.target.files[0]);
+        };
+
+        const handleFileUpload = async () => {
+          if (file) { //@ts-ignore
+            console.log("File selected:", file.name); //@ts-ignore
+            const userAccount = JSON.parse(localStorage.getItem('hederaAccountData'));
+            // Add logic to upload the file (e.g., sending it to a server)
+            const transaction = new FileCreateTransaction() //@ts-ignore
+    .addkey(userAccount?.accountId) 
+    .setContents(file);
+        
+//Change the default max transaction fee to 2 hbars
+const modifyMaxTransactionFee = transaction.setMaxTransactionFee(new Hbar(2)); 
+
+//Prepare transaction for signing, sign with the key on the file, sign with the client operator key and submit to a Hedera network
+const txId = await modifyMaxTransactionFee.build(client).sign(userAccount?.accountId).execute(client);
+
+//Request the receipt
+const receipt = await txId.getReceipt(client);
+
+//Get the file ID
+const newFileId = receipt.getFileId();
+
+console.log("The new file ID is: " + newFileId);
+          } else {
+            alert("Please select a file first!");
+          }
+        };
+
         const handleFetch = async () => {
             if(value) {
                 const videoId = extractYoutubeVideoId(value);
-                let result = await axios.get("http://localhost:3001/reels/" + videoId)
+                let result = await axios.get("https://api.clonemytrips.com/reels/" + videoId)
                 result = result.data
                 // const result = {
                 //     "result": [
@@ -407,7 +447,7 @@ export const Upload = () => {
         const handleUpload = async () => {
             // const response = await axios.post(extractedData?.videoDetails?.thumbnails?.high?.url, { responseType: 'arraybuffer' });
             // const imageBuffer = Buffer.from(response.data, 'binary');
-            const response = await axios.post('http://localhost:3001/proxy', { //@ts-ignore
+            const response = await axios.post('https://api.clonemytrips.com/proxy', { //@ts-ignore
                 url: extractedData?.videoDetails?.thumbnails?.high?.url
             })
             console.log(response)
@@ -460,6 +500,20 @@ export const Upload = () => {
                 </div>
                 <button onClick={() => handleUpload()}>Upload & Mint NFT</button>
                 </div>}
+                {!extractedData && <div style={{ marginTop: "80px" }}>
+                  <div>Or</div>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className='m-2'
+      />
+      <button onClick={handleFileUpload} style={{ padding: "5px 15px" }}>
+        Upload
+      </button>
+      {/* @ts-ignore */}
+      {file && <p>Selected File: {file.name}</p>}
+    </div>}
                 <div className='p-8' />
         </div>
       );

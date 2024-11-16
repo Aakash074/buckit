@@ -53,7 +53,7 @@ export const Home = () => {
         <img src={BuckLogo} alt="buck" className='max-w-80' />
         <div className='text-xl font-bold'>BUCKIT</div>
         <div className='text-md'>Bucketlist of Travel Inspiration</div>
-        <div className='w-full justify-center'>
+        <div className='w-full justify-center ml-[250px] md:ml-[1350px]'>
         <DynamicWidget innerButtonComponent={<ShimmerButton className="shadow-2xl">
         <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
           Login / Signup
