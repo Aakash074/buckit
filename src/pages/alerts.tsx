@@ -36,7 +36,7 @@ export const Alerts = () => {
     }, [])
 
     return <div className='flex flex-col'>
-        <div>Notifications</div>
+        <div className='text-lg font-bold'>Notifications</div>
         <div className='flex flex-col w-full'>
             {notifs?.map(item => {
                 return <div className='p-4 text-left'>

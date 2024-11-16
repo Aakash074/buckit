@@ -4,6 +4,8 @@ import { Client, ContractCallQuery, ContractFunctionParameters, PrivateKey, Acco
 import { useEffect, useState } from "react";
 import { Interface } from "ethers"; // Direct import in v6
 import BucketAbi from "../contracts/BucketAbi.json";
+import { MagicCard } from '@/components/ui/magic-card';
+
 // const parseUint256 = (value) => {
 //   return toBigInt(value);
 // };
@@ -85,15 +87,25 @@ useEffect(() => {
 },[])
 
     return (
-    <div className="w-full h-full flex flex-col text-left">
+    <div className="w-full h-full flex flex-col text-left p-4">
+        <div className="text-xl font-bold">Buckets</div>
         {countries?.map(item => <div className="flex flex-col">
             {/* @ts-ignore */}
-            <div>{item?.country}</div> 
+            <MagicCard
+        className="cursor-pointer flex-col shadow-2xl  p-2 m-2"
+        gradientColor={"#D9D9D955"}
+      >
+        {/* @ts-ignore */}
+            <div className="text-lg font-bold">{item?.country}</div> 
             {/* @ts-ignore */}
             {item?.locations?.map((subItem, index) => <div className="flex flex-col p-2">
                 <div>{index + 1}. {subItem?.name} ({subItem?.type})</div>
                 <div>{subItem?.address}</div>
             </div>)}
+            {/* @ts-ignore */}
+            <div>{parseInt(Math.random()*1000)} USD</div>
+            <div className="w-full text-right cursor-pointer">Book Now</div>
+            </MagicCard>
         </div>)}
     </div>
     );
