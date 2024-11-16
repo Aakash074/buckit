@@ -31,6 +31,8 @@ useEffect(() => {
                 <YouTubeEmbed //@ts-ignore
                     videoId={item?.metadata?.properties?.videoId} //@ts-ignore
                     buckets={item?.metadata?.properties?.buckets}//@ts-ignore
+                    creator={item?.metadata?.properties?.creator} //@ts-ignore
+                    description={item?.metadata?.description} //@ts-ignore
                     nftAddress={item?.token_id}
                 />
             </div>

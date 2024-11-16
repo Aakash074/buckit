@@ -2,16 +2,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect, useRef, useState } from 'react';
 import { Client, ContractExecuteTransaction, ContractFunctionParameters, PrivateKey, TopicMessageSubmitTransaction } from "@hashgraph/sdk";
+import { UserCircleIcon } from '@heroicons/react/24/solid';
+import { useNavigate } from 'react-router-dom';
 
 
-const contractId = "0.0.5089373"
+const contractId = "0.0.5136500"
 const topicId = "0.0.4887959"
 //@ts-ignore
-const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
+const YouTubeEmbed = ({ videoId, buckets, nftAddress, creator, description }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [showBucket, setShowBucket] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const navigate = useNavigate();
   const videoRef = useRef(null);
   console.log(buckets)
 
@@ -169,10 +172,14 @@ const YouTubeEmbed = ({ videoId, buckets, nftAddress }) => {
       >
       </iframe>
       </div>
-      <div className={`absolute ${isMobile ? ' flex flex-row w-full ml-4 bottom-16' : 'bottom-8 flex flex-row w-[95%] max-w-[380px]'}`}>
+      <div className={`absolute bg-opacity-40 flex flex-row justify-between bg-black rounded-md ${isMobile ? ' flex flex-row w-[98%] mx-4 bottom-16' : 'bottom-8 flex flex-row w-[95%] max-w-[380px]'}`}>
+        <div className='flex flex-col w-[70%] text-left text-white p-4'>
+          <div className='flex flex-row gap-2 items-center cursor-pointer' onClick={() => navigate('/' + creator)}><div><UserCircleIcon className="size-4 text-blue-500" /></div><div className='font-bold'>{creator}</div></div>
+          <div>{description}</div>
+        </div>
         <button onClick={() => setShowBucket(!showBucket)}>BuckIt</button>
       </div>
-    {showBucket && <div className={`absolute ${isMobile ? 'm-4 w-[95%] bottom-24' : 'bottom-16 m-4 w-[95%] max-w-[380px]' } z-100 bg-white p-4 rounded-md`}>
+    {showBucket && <div className={`absolute ${isMobile ? 'm-4 w-[95%] bottom-40' : 'bottom-32 m-4 w-[95%] max-w-[380px]' } z-100 bg-white p-4 rounded-md`}>
       {/* <div>
         <label>
           <input

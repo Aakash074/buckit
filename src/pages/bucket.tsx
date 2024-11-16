@@ -9,7 +9,7 @@ import BucketAbi from "../contracts/BucketAbi.json";
 // };
 
 
-const contractId = "0.0.5089373"
+const contractId = "0.0.5136500"
 //@ts-ignore
 function transformToCountryGroupedArray(data) {
     const countryMap = {};
@@ -73,48 +73,6 @@ async function getBucketList() {
             "getLinkedNFTsAndBuckets", // Function name
             result.bytes // Byte array result from Hedera contract call
           );
-      
-    //       console.log("Decoded Result:", decodedResult);
-
-        //   const decodedResult = [
-        //     [
-        //         [
-        //             "0.0.5077557",
-        //             [
-        //                 [
-        //                     "visit",
-        //                     "Pan Pacific Orchard Hotel",
-        //                     "Claymore Road, Pan Pacific Orchard, Singapore, Singapore"
-        //                 ],
-        //                 [
-        //                     "visit",
-        //                     "ION Orchard",
-        //                     "Orchard Road, Ion Orchard Link, Singapore"
-        //                 ]
-        //             ]
-        //         ],
-        //         [
-        //             "0.0.5077563",
-        //             [
-        //                 [
-        //                     "activity",
-        //                     "Karaoke Booth",
-        //                     "Yule Baby Infant Water World, Yongtai Road, Pudong, Shanghai, China"
-        //                 ]
-        //             ]
-        //         ],
-        //         [
-        //             "0.0.5077563",
-        //             [
-        //                 [
-        //                     "activity",
-        //                     "Billiard Room",
-        //                     "Yule Baby Infant Water World, Yongtai Road, Pudong, Shanghai, China"
-        //                 ]
-        //             ]
-        //         ]
-        //     ]
-        // ]
 
         const finalResult = transformToCountryGroupedArray(decodedResult);
         console.log(finalResult) //@ts-ignore
